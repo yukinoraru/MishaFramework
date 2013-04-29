@@ -6,20 +6,14 @@
   <display-name>Misha Framework</display-name>
   <description>The minimal framework for Java Servlet.</description>
 
-  <!--Application Initial Parameter -->
-  <context-param>
-    <param-name>debug</param-name>
-    <param-value>true</param-value>
-  </context-param>
-
   <filter>
-    <description>Filter Manger</description>
-    <display-name>Filter Manger</display-name>
-    <filter-name>FilterManager</filter-name>
+    <display-name>Root Filter</display-name>
+    <description>Gathering all requests and apply filters</description>
+    <filter-name>RootFilter</filter-name>
     <filter-class>jp.recruit.bootcamp.filter.RootFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>FilterManager</filter-name>
+    <filter-name>RootFilter</filter-name>
     <url-pattern>/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
@@ -31,7 +25,7 @@
       <el-ignored>false</el-ignored>
       <page-encoding>UTF-8</page-encoding>
       <scripting-invalid>false</scripting-invalid>
-      <include-prelude>/WEB-INF/views/layout/common.jsp</include-prelude>
+      <include-prelude>/WEB-INF/views/common.jsp</include-prelude>
     </jsp-property-group>
   </jsp-config>
 

@@ -2,9 +2,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>${requestScope['page.title']}</title>
+<title>${_page.title}</title>
 </head>
 <body>
-<c:import url="${requestScope['page.jsp']}" />
+<c:import url="${_page.jsp}" />
 </body>
 </html>

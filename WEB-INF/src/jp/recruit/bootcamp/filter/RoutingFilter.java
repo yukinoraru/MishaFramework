@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import jp.recruit.bootcamp.Route;
 import jp.recruit.bootcamp.controller.ControllerAbstract;
+import jp.recruit.bootcamp.helper.DebugHelper;
 
 public class RoutingFilter extends CustomFilterAbstract {
 
@@ -31,7 +32,10 @@ public class RoutingFilter extends CustomFilterAbstract {
                 "jp.recruit.bootcamp.controller.WelcomeController"));
 
         _routes.add(new Route("/MishaFramework/test/*.*",
-                "jp.recruit.bootcamp.controller.TestController"));
+                "jp.recruit.bootcamp.controller.NoJSPController"));
+
+        _routes.add(new Route("/MishaFramework/plain",
+                "jp.recruit.bootcamp.controller.PlainPageController"));
 
     }
 
@@ -46,8 +50,7 @@ public class RoutingFilter extends CustomFilterAbstract {
         try {
             for (Route r : _routes) {
                 if (requestURI.matches(r.getPattern())) {
-                    System.out
-                            .println(String
+                    DebugHelper.out(String
                                     .format("route matched: (requestURI = [%s], pattern = [%s]) -> [%s]",
                                             requestURI, r.getPattern(),
                                             r.getController()));
