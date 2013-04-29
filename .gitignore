@@ -1,0 +1,6 @@
+*.class
+/work/
+/WEB-INF/classes
+*.jar
+
+
