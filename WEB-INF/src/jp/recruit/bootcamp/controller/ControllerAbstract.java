@@ -11,50 +11,52 @@ import javax.servlet.http.HttpServletResponse;
 
 public abstract class ControllerAbstract extends HttpServlet {
 
-	protected String requestURI = null;
+    private static final long serialVersionUID = 1L;
 
-	// beforeProcessRequestの中から呼び出される。ほかはだめぽ
-	public abstract String processRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException;
+    protected String requestURI = null;
 
-	protected void render(HttpServletRequest request,
-			HttpServletResponse response, String layoutPath)
-			throws ServletException, IOException {
+    // beforeProcessRequestの中から呼び出される。ほかはだめぽ
+    public abstract String processRequest(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException;
 
-		String layoutFullPath = "/WEB-INF/views/" + layoutPath;
-		request.setAttribute("page.jsp", layoutFullPath);
-		
-		//FIXME: 良いレイアウトの指定方法はないかや
-		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/layout/basic-layout.jsp");
-		rd.forward(request, response);
+    protected void render(HttpServletRequest request,
+            HttpServletResponse response, String layoutPath)
+            throws ServletException, IOException {
 
-		return;
-	}
+        String layoutFullPath = "/WEB-INF/views/" + layoutPath;
+        request.setAttribute("page.jsp", layoutFullPath);
 
-	public void beforeProcessRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+        //FIXME: 良いレイアウトの指定方法はないかや
+        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/layout/basic-layout.jsp");
+        rd.forward(request, response);
 
-		// 前処理: パラメータとかの作成
-		requestURI = request.getRequestURI();
+        return;
+    }
 
-		// リクエストの処理
-		processRequest(request, response);
+    public void beforeProcessRequest(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
 
-		// 後処理: なんか共通のあれ
-		
-		return;
-	}
+        // 前処理: パラメータとかの作成
+        requestURI = request.getRequestURI();
 
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		beforeProcessRequest(request, response);
-		return;
-	}
+        // リクエストの処理
+        processRequest(request, response);
 
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		beforeProcessRequest(request, response);
-		return;
-	}
+        // 後処理: なんか共通のあれ
+
+        return;
+    }
+
+    protected void doGet(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
+        beforeProcessRequest(request, response);
+        return;
+    }
+
+    protected void doPost(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
+        beforeProcessRequest(request, response);
+        return;
+    }
 
 }
