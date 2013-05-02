@@ -6,12 +6,20 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
-public class DebugFilter extends CustomFilterAbstract{
+import jp.recruit.bootcamp.helper.DebugHelper;
+
+public class DebugFilter extends CustomFilterAbstract {
 
     @Override
     public void execute(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
+
+        HttpServletRequest requestHttp = (HttpServletRequest) request;
+        String requestURI = requestHttp.getRequestURI();
+
+        DebugHelper.out(requestURI);
 
     }
 

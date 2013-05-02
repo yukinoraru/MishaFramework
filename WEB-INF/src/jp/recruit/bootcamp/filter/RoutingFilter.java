@@ -4,21 +4,12 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import jp.recruit.bootcamp.Route;
 import jp.recruit.bootcamp.controller.ControllerAbstract;
 import jp.recruit.bootcamp.helper.DebugHelper;
 
@@ -55,6 +46,8 @@ public class RoutingFilter extends CustomFilterAbstract {
                                             requestURI, r.getPattern(),
                                             r.getController()));
                     try {
+
+                        // delegate request to the controller
                         String className = r.getController();
                         Class<?> classForName = Class.forName(className);
 
@@ -71,22 +64,16 @@ public class RoutingFilter extends CustomFilterAbstract {
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     } catch (InstantiationException e) {
-                        // TODO 自動生成された catch ブロック
                         e.printStackTrace();
                     } catch (IllegalAccessException e) {
-                        // TODO 自動生成された catch ブロック
                         e.printStackTrace();
                     } catch (IllegalArgumentException e) {
-                        // TODO 自動生成された catch ブロック
                         e.printStackTrace();
                     } catch (InvocationTargetException e) {
-                        // TODO 自動生成された catch ブロック
                         e.printStackTrace();
                     } catch (SecurityException e) {
-                        // TODO 自動生成された catch ブロック
                         e.printStackTrace();
                     } catch (NoSuchMethodException e) {
-                        // TODO 自動生成された catch ブロック
                         e.printStackTrace();
                     }
 

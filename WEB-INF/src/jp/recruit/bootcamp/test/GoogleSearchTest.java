@@ -8,7 +8,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import java.util.regex.Pattern;
 
 public class GoogleSearchTest {
     private Selenium selenium;

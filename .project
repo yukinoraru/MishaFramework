@@ -15,4 +15,15 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>com.sysdeo.eclipse.tomcat.tomcatnature</nature>
 	</natures>
+	<filteredResources>
+		<filter>
+			<id>1367256713803</id>
+			<name></name>
+			<type>14</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-projectRelativePath-matches-false-false-/work/*</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>
