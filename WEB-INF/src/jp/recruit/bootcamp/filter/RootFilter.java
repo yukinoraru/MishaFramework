@@ -21,18 +21,23 @@ public class RootFilter implements Filter {
         addFilter(new DebugFilter());
         addFilter(new EncodingFilter());
         addFilter(new RoutingFilter());
+
+        // call init
+        Iterator<CustomFilterAbstract> filters = customFilters.iterator();
+        while (filters.hasNext()) {
+            CustomFilterAbstract filter = (CustomFilterAbstract) filters.next();
+            filter.init(filterConfig);
+        }
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
 
-        CustomFilterAbstract filter;
-
         // apply filters
         Iterator<CustomFilterAbstract> filters = customFilters.iterator();
         while (filters.hasNext()) {
-            filter = (CustomFilterAbstract) filters.next();
+            CustomFilterAbstract filter = (CustomFilterAbstract) filters.next();
             filter.doFilter(request, response, chain);
         }
 

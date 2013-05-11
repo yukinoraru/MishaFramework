@@ -11,8 +11,11 @@ import javax.servlet.ServletResponse;
 
 public abstract class CustomFilterAbstract implements Filter {
 
-    public abstract void execute(ServletRequest request, ServletResponse response,
-            FilterChain chain) throws IOException, ServletException;
+    public abstract void execute(ServletRequest request,
+            ServletResponse response, FilterChain chain) throws IOException,
+            ServletException;
+
+    protected FilterConfig config;
 
     @Override
     public void destroy() {
@@ -22,17 +25,11 @@ public abstract class CustomFilterAbstract implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
-
-        // TODO: フィルターの共通処理を記述
-
         execute(request, response, chain);
-
-        // 後処理
     }
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
+    public void init(FilterConfig config) {
+        this.config = config;
     }
-
 }

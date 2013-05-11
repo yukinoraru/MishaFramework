@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routeinfo controllerBasePath="jp.recruit.bootcamp.controller" urlPrefix="/MishaFramework">
+
+    <route pattern="/welcome/a" controller="WelcomeController" action="alpha" />
+    <route pattern="/welcome/b" controller="WelcomeController" action="beta" />
+    <route pattern="/welcome/error" controller="WelcomeController" action="showErrors" />
+    <route pattern="/welcome/json" controller="WelcomeController" action="getJSON" />
+    <route pattern="/welcome/*.*" controller="WelcomeController" action="index" />
+
+</routeinfo>

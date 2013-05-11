@@ -1,7 +1,7 @@
 package jp.recruit.bootcamp.filter;
 
 import java.io.IOException;
-
+import java.util.Enumeration;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -19,7 +19,15 @@ public class DebugFilter extends CustomFilterAbstract {
         HttpServletRequest requestHttp = (HttpServletRequest) request;
         String requestURI = requestHttp.getRequestURI();
 
-        DebugHelper.out(requestURI);
+        DebugHelper.out("REQUEST-URI = %s", requestURI);
+        DebugHelper.out("REQUEST-PARAMETERS = %d", request.getParameterMap()
+                .size());
+
+        Enumeration<?> enumeration = request.getParameterNames();
+        while (enumeration.hasMoreElements()) {
+            String name = (String) enumeration.nextElement();
+            DebugHelper.out("\t%s = %s", name, request.getParameter(name));
+        }
 
     }
 

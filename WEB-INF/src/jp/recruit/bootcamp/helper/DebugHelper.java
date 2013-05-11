@@ -4,19 +4,24 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 import javax.servlet.ServletRequest;
+
 import org.apache.log4j.Logger;
 import jp.recruit.bootcamp.ApplicationResource;
 
 public class DebugHelper {
 
-	// 呼び出し元のクラス名を反映したloggerを取得
-	// 低速なので注意
+    // 呼び出し元のクラス名を反映したloggerを取得
+    // 低速なので注意
     private static Logger getLogger() {
-    	final Throwable t = new Throwable();
-    	final StackTraceElement methodCaller = t.getStackTrace()[2];
-    	final Logger logger = Logger.getLogger(methodCaller.getClassName());
-    	logger.setLevel(ApplicationResource.LOGLEVEL);
-    	return logger;
+        final Throwable t = new Throwable();
+        final StackTraceElement methodCaller = t.getStackTrace()[2];
+        final Logger logger = Logger.getLogger(methodCaller.getClassName());
+        logger.setLevel(ApplicationResource.LOGLEVEL);
+        return logger;
+    }
+
+    public static void out(String format, final Object... o) {
+        getLogger().debug(String.format(format, o));
     }
 
     public static void out(String msg) {
@@ -51,14 +56,14 @@ public class DebugHelper {
     }
 
     public static void error(String msg) {
-    	getLogger().error(msg);
+        getLogger().error(msg);
     }
 
     public static void fatal(String msg) {
-    	getLogger().fatal(msg);
+        getLogger().fatal(msg);
     }
 
     public static void info(String msg) {
-    	getLogger().info(msg);
+        getLogger().info(msg);
     }
 }
