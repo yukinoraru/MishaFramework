@@ -1,0 +1,4 @@
+[DEBUG] 2013-05-12 00:36:23 REQUEST-URI = /MishaFramework/welcome/b
+[DEBUG] 2013-05-12 00:36:23 REQUEST-PARAMETERS = 0
+[DEBUG] 2013-05-12 00:36:23 route matched: (requestURI = [/MishaFramework/welcome/b], pattern = [/MishaFramework/welcome/b]) -> [jp.recruit.bootcamp.controller.WelcomeController#beta]
+[DEBUG] 2013-05-12 00:36:23 THIS IS BETA ACTION.

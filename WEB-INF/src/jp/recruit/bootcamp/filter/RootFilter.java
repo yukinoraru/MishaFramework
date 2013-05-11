@@ -18,8 +18,8 @@ public class RootFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         //
-        addFilter(new DebugFilter());
         addFilter(new EncodingFilter());
+        addFilter(new DebugFilter());
         addFilter(new RoutingFilter());
 
         // call init
