@@ -20,7 +20,7 @@ public class GoogleSearchTest {
     }
 
     @Test
-    public void test検索時のタイトルに検索ワードが含まれるかどうか() throws Exception {
+    public void testSerchTitleIsEqualsQuery() throws Exception {
         selenium.open("/webhp?hl=en&tab=ww");
         selenium.type("id=gbqfq", "recruit");
         selenium.click("id=gbqfb");

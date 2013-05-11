@@ -19,14 +19,22 @@ public class RoutingFilter extends CustomFilterAbstract {
 
     public RoutingFilter() {
 
-        _routes.add(new Route("/MishaFramework/welcome/*.*",
-                "jp.recruit.bootcamp.controller.WelcomeController"));
+    	String URI_PREFIX = "/MishaFramework";
 
-        _routes.add(new Route("/MishaFramework/test/*.*",
-                "jp.recruit.bootcamp.controller.NoJSPController"));
+        _routes.add(new Route(URI_PREFIX+"/welcome/a",
+                "jp.recruit.bootcamp.controller.WelcomeController", "alpha"));
 
-        _routes.add(new Route("/MishaFramework/plain",
-                "jp.recruit.bootcamp.controller.PlainPageController"));
+        _routes.add(new Route(URI_PREFIX+"/welcome/b",
+                "jp.recruit.bootcamp.controller.WelcomeController", "beta"));
+
+        _routes.add(new Route(URI_PREFIX+"/welcome/error",
+                "jp.recruit.bootcamp.controller.WelcomeController", "showErrors"));
+
+        _routes.add(new Route(URI_PREFIX+"/welcome/json",
+                "jp.recruit.bootcamp.controller.WelcomeController", "getJSON"));
+
+        _routes.add(new Route(URI_PREFIX+"/welcome/*.*",
+                "jp.recruit.bootcamp.controller.WelcomeController", "index"));
 
     }
 
@@ -42,24 +50,24 @@ public class RoutingFilter extends CustomFilterAbstract {
             for (Route r : _routes) {
                 if (requestURI.matches(r.getPattern())) {
                     DebugHelper.out(String
-                                    .format("route matched: (requestURI = [%s], pattern = [%s]) -> [%s]",
+                                    .format("route matched: (requestURI = [%s], pattern = [%s]) -> [%s#%s]",
                                             requestURI, r.getPattern(),
-                                            r.getController()));
+                                            r.getController(), r.getAction()));
                     try {
 
                         // delegate request to the controller
                         String className = r.getController();
                         Class<?> classForName = Class.forName(className);
 
-                        Class<?>[] mp = { HttpServletRequest.class,
+                        Class<?>[] mp = { String.class, HttpServletRequest.class,
                                 HttpServletResponse.class };
                         ControllerAbstract instance = (ControllerAbstract) classForName
                                 .newInstance();
 
                         Method m = classForName.getMethod(
-                                "beforeProcessRequest", mp);
+                                "callAction", mp);
 
-                        m.invoke(instance, request, response);
+                        m.invoke(instance, r.getAction(), request, response);
 
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
@@ -81,11 +89,10 @@ public class RoutingFilter extends CustomFilterAbstract {
                 }
             }
         } catch (IllegalStateException e) {
-            System.out.println("むりぽ");
+            System.out.println("ああ");
             e.printStackTrace();
         }
         chain.doFilter(request, response);
-
     }
 
 }

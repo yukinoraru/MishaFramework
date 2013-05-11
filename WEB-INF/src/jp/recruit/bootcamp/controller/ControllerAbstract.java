@@ -2,6 +2,8 @@ package jp.recruit.bootcamp.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,9 +16,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import jp.recruit.bootcamp.ApplicationResource;
+import jp.recruit.bootcamp.helper.DebugHelper;
+
 public abstract class ControllerAbstract extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+
+    /* パラメータ名 */
+    protected static final String JSP = "jsp", TITLE = "title",
+            LAYOUT = "layout", ERRORS = "_errors", PAGE = "_page";
 
     protected String requestURI = null;
     protected HttpSession session = null;
@@ -25,42 +34,44 @@ public abstract class ControllerAbstract extends HttpServlet {
     protected Map<String, String> page = null;
 
     // beforeProcessRequestの中から呼び出される。ほかはだめぽ
-    public abstract String processRequest(HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException;
+    // public abstract String processRequest(HttpServletRequest request,
+    // HttpServletResponse response) throws ServletException, IOException;
 
     protected void render(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
 
-        // FIXME: 良いレイアウトの指定方法はないかや
-        String layout = page.get("layout");
+        String layout = page.get(LAYOUT);
         if (layout != null) {
             RequestDispatcher rd = request.getRequestDispatcher(layout);
             rd.forward(request, response);
+        } else {
+            DebugHelper.fatal("layout is null.");
         }
-
         return;
     }
 
     protected void setPageAttribute(String key, String value) {
-        if (key.equals("jsp")) {
-            String layoutFullPath = "/WEB-INF/views/" + value;
-            page.put("jsp", layoutFullPath);
-        }
-        else if (key.equals("layout")) {
+        if (key.equals(JSP)) {
+            String layoutFullPath = ApplicationResource.LAYOUT_VIEW_PATH
+                    + value;
+            page.put(JSP, layoutFullPath);
+        } else if (key.equals(LAYOUT)) {
             if (value != null) {
-                String layoutFullPath = "/WEB-INF/views/layout/" + value;
-                page.put("layout", layoutFullPath);
-            }
-            else{
-                page.put("layout", null);
+                String layoutFullPath = ApplicationResource.LAYOUT_LAYOUT_PATH
+                        + value;
+                page.put(LAYOUT, layoutFullPath);
+            } else {
+                page.put(LAYOUT, null);
             }
         } else {
             page.put(key, value);
         }
     }
 
-    public void beforeProcessRequest(HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException {
+    public void callAction(String action, HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException,
+            IllegalArgumentException, IllegalAccessException,
+            InvocationTargetException, SecurityException, NoSuchMethodException {
 
         // 前処理: パラメータとかの作成
         requestURI = request.getRequestURI();
@@ -70,31 +81,20 @@ public abstract class ControllerAbstract extends HttpServlet {
 
         //
         page = new HashMap<String, String>();
-        setPageAttribute("layout", "basic-layout.jsp");
+        setPageAttribute(LAYOUT, ApplicationResource.LAYOUT_DEFAULT);
 
-        // リクエストの処理
-        processRequest(request, response);
+        // 指定リクエストを指定アクションへ委譲
+        Class<?>[] mp = { HttpServletRequest.class, HttpServletResponse.class };
+        Method m = this.getClass().getMethod(action, mp);
+        m.invoke(this, request, response);
 
         // 後処理: なんか共通のあれ
-        session.setAttribute("_errors", errors);
-        request.setAttribute("_page", page);
+        session.setAttribute(ERRORS, errors);
+        request.setAttribute(PAGE, page);
 
         render(request, response);
         out.close();
 
         return;
     }
-
-    protected void doGet(HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException {
-        beforeProcessRequest(request, response);
-        return;
-    }
-
-    protected void doPost(HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException {
-        beforeProcessRequest(request, response);
-        return;
-    }
-
 }

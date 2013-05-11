@@ -9,13 +9,18 @@ import jp.recruit.bootcamp.ApplicationResource;
 
 public class DebugHelper {
 
-    // TODO: 呼び出し元のクラス名を元に作成する
-    private static final Logger logger = Logger.getLogger("DebugHelper");
+	// 呼び出し元のクラス名を反映したloggerを取得
+	// 低速なので注意
+    private static Logger getLogger() {
+    	final Throwable t = new Throwable();
+    	final StackTraceElement methodCaller = t.getStackTrace()[2];
+    	final Logger logger = Logger.getLogger(methodCaller.getClassName());
+    	logger.setLevel(ApplicationResource.LOGLEVEL);
+    	return logger;
+    }
 
     public static void out(String msg) {
-        if (ApplicationResource.isDebugMode()) {
-            logger.debug(msg);
-        }
+        getLogger().debug(msg);
     }
 
     public static void out(Object obj) {
@@ -46,14 +51,14 @@ public class DebugHelper {
     }
 
     public static void error(String msg) {
-        logger.error(msg);
+    	getLogger().error(msg);
     }
 
     public static void fatal(String msg) {
-        logger.fatal(msg);
+    	getLogger().fatal(msg);
     }
 
     public static void info(String msg) {
-        logger.info(msg);
+    	getLogger().info(msg);
     }
 }

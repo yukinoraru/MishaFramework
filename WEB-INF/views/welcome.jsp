@@ -4,4 +4,4 @@
 
 <br>
 
-<c:out value="${requestScope['page.jsp']}"/>
+<c:out value="${_page.jsp}"/>

@@ -8,7 +8,6 @@
 
   <filter>
     <display-name>Root Filter</display-name>
-    <description>Gathering all requests and apply filters</description>
     <filter-name>RootFilter</filter-name>
     <filter-class>jp.recruit.bootcamp.filter.RootFilter</filter-class>
   </filter>
