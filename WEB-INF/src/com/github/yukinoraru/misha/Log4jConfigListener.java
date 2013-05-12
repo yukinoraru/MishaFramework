@@ -1,4 +1,4 @@
-package jp.recruit.bootcamp;
+package com.github.yukinoraru.misha;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;

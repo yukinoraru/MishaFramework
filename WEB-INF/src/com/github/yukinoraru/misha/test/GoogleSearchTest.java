@@ -1,4 +1,4 @@
-package jp.recruit.bootcamp.test;
+package com.github.yukinoraru.misha.test;
 
 import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.firefox.FirefoxDriver;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<routeinfo controllerBasePath="jp.recruit.bootcamp.controller" urlPrefix="/MishaFramework">
+<routeinfo controllerBasePath="com.github.yukinoraru.misha.controller" urlPrefix="MishaFramework">
 
     <route pattern="/welcome/a" controller="WelcomeController" action="alpha" />
     <route pattern="/welcome/b" controller="WelcomeController" action="beta" />

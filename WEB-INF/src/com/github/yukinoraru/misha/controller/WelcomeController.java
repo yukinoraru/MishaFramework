@@ -1,4 +1,4 @@
-package jp.recruit.bootcamp.controller;
+package com.github.yukinoraru.misha.controller;
 
 import java.io.IOException;
 import java.util.Random;
@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.recruit.bootcamp.helper.DebugHelper;
+import com.github.yukinoraru.misha.helper.DebugHelper;
 
 public class WelcomeController extends ControllerAbstract {
 

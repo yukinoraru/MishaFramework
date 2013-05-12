@@ -9,7 +9,7 @@
     <filter>
         <display-name>Root Filter</display-name>
         <filter-name>RootFilter</filter-name>
-        <filter-class>jp.recruit.bootcamp.filter.RootFilter</filter-class>
+        <filter-class>com.github.yukinoraru.misha.filter.RootFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>RootFilter</filter-name>
@@ -18,7 +18,7 @@
     </filter-mapping>
 
     <listener>
-        <listener-class>jp.recruit.bootcamp.Log4jConfigListener</listener-class>
+        <listener-class>com.github.yukinoraru.misha.Log4jConfigListener</listener-class>
     </listener>
 
     <jsp-config>
