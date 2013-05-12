@@ -14,8 +14,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * ルーティング情報を格納するクラス
+ *
+ * @see RoutingFilter
+ */
 public class Route {
-    String pattern, controller, action;
+    private String pattern, controller, action;
 
     public String getAction() {
         return action;

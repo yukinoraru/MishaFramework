@@ -1,17 +1,17 @@
 package jp.recruit.bootcamp.helper;
 
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map;
-import javax.servlet.ServletRequest;
 
 import org.apache.log4j.Logger;
 import jp.recruit.bootcamp.ApplicationResource;
 
 public class DebugHelper {
 
-    // 呼び出し元のクラス名を反映したloggerを取得
-    // 低速なので注意
+    /**
+     * 呼び出し元のクラス名を反映したloggerを取得<br>
+     * このクラス以外からコールしてはならない<br>
+     * また低速であるのでデバッグ時以外は切ること<br>
+     */
     private static Logger getLogger() {
         final Throwable t = new Throwable();
         final StackTraceElement methodCaller = t.getStackTrace()[2];
@@ -20,10 +20,21 @@ public class DebugHelper {
         return logger;
     }
 
+    /**
+     * <code> DebugHelper.out(String.format(f, o )) </code><br>
+     * と等価
+     *
+     * @see DebugHelper#out(String)
+     */
     public static void out(String format, final Object... o) {
         getLogger().debug(String.format(format, o));
     }
 
+    /**
+     * DEBUGレベルでmsgを出力する
+     *
+     * @see DebugHelper#out(String, Object...)
+     */
     public static void out(String msg) {
         getLogger().debug(msg);
     }
@@ -32,19 +43,11 @@ public class DebugHelper {
         out(obj.toString());
     }
 
+    /**
+     * 配列をすべて出力する。
+     */
     public static void out(Object[] array) {
         print_r(array);
-    }
-
-    public static void printRequestParameters(ServletRequest request) {
-        Map<?, ?> params = request.getParameterMap();
-        Iterator<?> i = params.keySet().iterator();
-
-        while (i.hasNext()) {
-            String key = (String) i.next();
-            String value = ((String[]) params.get(key))[0];
-            out(String.format("params[%s] = %s", key, value));
-        }
     }
 
     public static void printr(Object[] array) {

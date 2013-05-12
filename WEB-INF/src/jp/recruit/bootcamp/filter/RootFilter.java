@@ -11,6 +11,14 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+/**
+ * すべてのフィルターの呼び出し元
+ * ここで定義されたフィルターを順番に呼び出す
+ * @see EncodingFilter
+ * @see RoutingFilter
+ * @see DebugFilter
+ * @see CustomFilterAbstract
+ */
 public class RootFilter implements Filter {
 
     private Vector<CustomFilterAbstract> customFilters = new Vector<CustomFilterAbstract>();

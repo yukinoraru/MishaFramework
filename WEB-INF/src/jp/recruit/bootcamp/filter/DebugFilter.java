@@ -1,7 +1,9 @@
 package jp.recruit.bootcamp.filter;
 
 import java.io.IOException;
-import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Map;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -10,6 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import jp.recruit.bootcamp.helper.DebugHelper;
 
+/**
+ * リクエスト情報を出力する。<br>
+ * リクエストパラメータも併せて表示する
+ *
+ * @see RootFilter
+ * @see CustomFilterAbstract
+ */
 public class DebugFilter extends CustomFilterAbstract {
 
     @Override
@@ -23,12 +32,18 @@ public class DebugFilter extends CustomFilterAbstract {
         DebugHelper.out("REQUEST-PARAMETERS = %d", request.getParameterMap()
                 .size());
 
-        Enumeration<?> enumeration = request.getParameterNames();
-        while (enumeration.hasMoreElements()) {
-            String name = (String) enumeration.nextElement();
-            DebugHelper.out("\t%s = %s", name, request.getParameter(name));
-        }
+        printRequestParameters(request);
+    }
 
+    public static void printRequestParameters(ServletRequest request) {
+        Map<?, ?> params = request.getParameterMap();
+        Iterator<?> i = params.keySet().iterator();
+
+        while (i.hasNext()) {
+            String key = (String) i.next();
+            String value = ((String[]) params.get(key))[0];
+            DebugHelper.out("\tPARAMS[\"%s\"] => %s", key, value);
+        }
     }
 
 }

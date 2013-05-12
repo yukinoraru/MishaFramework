@@ -7,6 +7,12 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+/**
+ * 全リクエストのエンコーディングに関する設定するフィルター<br>
+ *
+ * @see RootFilter
+ * @see CustomFilterAbstract
+ */
 public class EncodingFilter extends CustomFilterAbstract {
 
     @Override

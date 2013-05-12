@@ -15,6 +15,13 @@ import jp.recruit.bootcamp.ApplicationResource;
 import jp.recruit.bootcamp.controller.ControllerAbstract;
 import jp.recruit.bootcamp.helper.DebugHelper;
 
+/**
+ * リクエストのルーティングを行う。<br>
+ * 適切なコントローラ#アクションにリクエストのすべてを委譲する。
+ *
+ * @see Route
+ * @see RootFilter
+ */
 public class RoutingFilter extends CustomFilterAbstract {
 
     private ArrayList<Route> _routes;
@@ -22,7 +29,7 @@ public class RoutingFilter extends CustomFilterAbstract {
     @Override
     public void init(FilterConfig config) {
 
-        // load
+        // ルーティングテーブルの読み込み
         String routeConfigPath = config.getServletContext().getRealPath(
                 ApplicationResource.ROUTE_CONFIG);
         _routes = Route.loadRoutes(routeConfigPath);
@@ -40,10 +47,9 @@ public class RoutingFilter extends CustomFilterAbstract {
             for (Route r : _routes) {
                 if (requestURI.matches(r.getPattern())) {
                     DebugHelper
-                            .out(String
-                                    .format("route matched: (requestURI = [%s], pattern = [%s]) -> [%s#%s]",
-                                            requestURI, r.getPattern(),
-                                            r.getController(), r.getAction()));
+                            .out("route matched: (requestURI = [%s], pattern = [%s]) -> [%s#%s]",
+                                    requestURI, r.getPattern(),
+                                    r.getController(), r.getAction());
                     try {
 
                         // delegate request to the controller
@@ -80,7 +86,7 @@ public class RoutingFilter extends CustomFilterAbstract {
                 }
             }
         } catch (IllegalStateException e) {
-            System.out.println("ああ");
+            DebugHelper.fatal("Failed to routing.");
             e.printStackTrace();
         }
         chain.doFilter(request, response);
